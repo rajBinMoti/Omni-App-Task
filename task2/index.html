@@ -6,12 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foolish Fish</title>
-
 </head>
 
 <body>
-    <input type="text" placeholder="Enter your phrase" autocomplete="off">
-    <pre>
+    <input id="inp" type="text" placeholder="Enter your phrase" autocomplete="off">
+    <h2 id="result">Query: </h2>
+    <h2 id="found">Found: </h2>
+    <pre id="content"></pre>
+
+    <script>
+        // code for highlighting the matched content
+        const original = `
         This Short Story The Foolish Fish is quite interesting to all the people. Enjoy reading this
         story.
         In a huge pond, there lived many fish. They were arrogant and never listened to anyone.
@@ -36,10 +41,23 @@
         Crocodile. He had only wanted to help. For our arrogance we have to pay with our lives,"
         said the fish.
         The fishermen took the foolish fish to the market and sold them for a good profit.
-    </pre>
-
-    <script>
-        // code for highlighting the matched content
+        `;
+        function highlighter() {
+            let inp = document.getElementById('inp').value;
+            let content = document.getElementById('content');
+            let result = document.getElementById('result')
+            let found = document.getElementById('found')
+            let matchCount = 0;
+            document.getElementById('content').innerText = original;
+            content.innerHTML = content.innerText.replace(new RegExp(inp, "gi"), (match) => {
+                matchCount++;
+                return `<mark>${match}</mark>`;
+            });
+            result.innerHTML = 'Query: ' + inp;
+            found.innerHTML = 'Found: ' + (matchCount < original.length ? matchCount : 0);
+        }
+        document.getElementById('content').innerText = original;
+        document.getElementById('inp').addEventListener('input', highlighter);
     </script>
 </body>
 
