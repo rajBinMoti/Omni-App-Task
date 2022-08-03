@@ -22,9 +22,9 @@ def find_sequences(match_length=10):
         temp = DNA[i:i+match_length]
         if temp in list(slices.keys()):
             slices[temp] += 1
+            result .append(temp)
         else:
             slices[temp] = 1
-    result = [x for x in slices if slices[x] > 1]
     return result
 
 
